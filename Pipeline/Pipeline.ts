@@ -55,11 +55,12 @@ const isProcessedUser = (data: unknown): data is ProcessedUser => {
   );
 };
 
-// Defining sample transformations
+// Defining sample transformation 01
 const firstPass: Transformation<RawUser, ProcessedUser> = (data) => {
   return { ...data, email: "", address: "" };
 };
 
+// Defining sample transformation 02
 const secondPass: Transformation<ProcessedUser, ProcessedUser> = (data) => {
   return {
     ...data,
@@ -68,6 +69,7 @@ const secondPass: Transformation<ProcessedUser, ProcessedUser> = (data) => {
   };
 };
 
+// Creating the pipeline
 const pipeline = createPipeline<RawUser, ProcessedUser>(
   isProcessedUser,
   firstPass,
@@ -83,6 +85,7 @@ const rawUser: RawUser = {
   state: "West Bengal",
 };
 
+// Running through pipeline
 const result = pipeline(rawUser);
 console.log(result);
 

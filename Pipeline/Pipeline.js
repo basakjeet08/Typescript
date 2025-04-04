@@ -1,3 +1,4 @@
+"use strict";
 var __assign = (this && this.__assign) || function () {
     __assign = Object.assign || function(t) {
         for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -9,6 +10,7 @@ var __assign = (this && this.__assign) || function () {
     };
     return __assign.apply(this, arguments);
 };
+Object.defineProperty(exports, "__esModule", { value: true });
 // Generic function
 function createPipeline(validator) {
     var transformations = [];
@@ -37,13 +39,15 @@ var isProcessedUser = function (data) {
         "state" in data &&
         "address" in data);
 };
-// Defining sample transformations
+// Defining sample transformation 01
 var firstPass = function (data) {
     return __assign(__assign({}, data), { email: "", address: "" });
 };
+// Defining sample transformation 02
 var secondPass = function (data) {
-    return __assign(__assign({}, data), { email: data.name + "@gmail.com", address: data.locality + " " + data.city + " " + data.state });
+    return __assign(__assign({}, data), { email: data.name + "@gmail.com", address: data.locality + ", " + data.city + ", " + data.state });
 };
+// Creating the pipeline
 var pipeline = createPipeline(isProcessedUser, firstPass, secondPass);
 // Defining the raw user
 var rawUser = {
@@ -53,5 +57,6 @@ var rawUser = {
     city: "Kolkata",
     state: "West Bengal",
 };
+// Running through pipeline
 var result = pipeline(rawUser);
 console.log(result);
